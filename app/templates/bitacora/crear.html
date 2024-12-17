@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {% block contenido %}
-<form method="post" id="formMovimiento" action="{% url 'app:bitacora_crear' %}">
+<form method="post" id="formBitacora" action="{% url 'app:bitacora_crear' %}">
     <div class="card card-default">
         <div class="card-header">
             <h3 class="card-title">
@@ -11,46 +11,42 @@
         </div>
         <div class="card-body">
             <div class="card-header" style="display: flex; justify-content: center; align-items: center; background-color: #094b39; color: white; text-align: center;">
-                <h1>Formato de entrega de materiales <br> de formación al aprendiz</h1>
+                <h1>Registro de bitácoras</h1>
             </div>
-            {% csrf_token %}
             <div class="card-header" style="background-color: #d4d4d4; color: black; text-align: center;">
-                <h2 style="display: flex; justify-content: center; align-items: center;"><b>Datos generales</b></h2>
+                <h2 style="display: flex; justify-content: center; align-items: center;"><b>Información general</b></h2>
+                {% for a in aprendiz %}
                 <div class="container-mov">
                     <div class="form-group row mt-3">
-                        <div class="col-md-3">
-                            <label for="programa_formacion">Programa de formación:</label>
-                            {{ form.programa_formacion|add_class:'form-control select2 select2-programa' }}
+                        <div class="col-md-4">
+                            <label>Aprendiz:<br></label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ a.nombre }}</p>
                         </div>
-                        <div class="col-md-3">
-                            <label for="num_ficha">Número de ficha:</label>
-                            {{ form.num_ficha|add_class:'form-control' }}
+                        <div class="col-md-2">
+                            <label>Tipo de documento:</label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ a.tipo_documento }}</p>
                         </div>
-                        <div class="col-md-3">
-                            <label for="fecha_inicio_programa">Fecha de inicio del programa:</label>
-                            {{ form.fecha_inicio_programa|add_class:'form-control' }}
+                        <div class="col-md-2">
+                            <label>N° de documento:</label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ a.num_documento }}</p>
                         </div>
-                        <div class="col-md-3">
-                            <label for="num_aprendices">Número de aprendices:</label>
-                            {{ form.num_aprendices|add_class:'form-control' }}
+                        <div class="col-md-4">
+                            <label>Correo:</label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ a.correo }}</p>
                         </div>
                     </div>
                     <div class="form-group row mt-3">
-                        <div class="col-md-3">
-                            <label for="aprendiz">Aprendiz líder (Vocero):</label>
-                            {{ form.aprendiz|add_class:'form-control' }}
+                        <div class="col-md-7">
+                            <label>Programa de formación:</label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ a.programa_formacion }}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <label>Número de ficha:</label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ a.num_ficha }}</p>
                         </div>
                         <div class="col-md-3">
-                            <label for="instructor">Instructor responsable:</label>
-                            {{ form.instructor|add_class:'form-control' }}
-                        </div>
-                        <div class="col-md-3">
-                            <label for="num_contrato">Contrato de compra N°:</label>
-                            {{ form.num_contrato|add_class:'form-control' }}
-                        </div>
-                        <div class="col-md-3">
-                            <label for="dependencia">Dependencia:</label>
-                            {{ form.dependencia|add_class:'form-control' }}
+                            <label>Fecha de inicio del programa:</label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ a.fecha_inicio_programa }}</p>
                         </div>
                     </div>
                     <div class="form-group row mt-2">
@@ -64,9 +60,11 @@
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
+            {% csrf_token %}
             <div class="card-header" style="background-color: #d4d4d4; color: black; text-align: center;">
-                <h2 style="display: flex; justify-content: center; align-items: center;"><b>Elementos a entregar</b>
+                <h2 style="display: flex; justify-content: center; align-items: center;"><b>Actividades realizadas</b>
                 </h2>
                 <div id="formset-container" class="formset-container">
                     {% if formset.non_form_errors %}
@@ -204,7 +202,7 @@
                 const newRemoveButton = document.createElement('button');
                 newRemoveButton.type = 'button';
                 newRemoveButton.className = 'btn btn-danger remove-form';
-                newRemoveButton.textContent = 'Quitar elemento';
+                newRemoveButton.textContent = 'Quitar formulario';
                 emptyFormTemplate.appendChild(newRemoveButton);
             }
 
@@ -232,7 +230,7 @@
 </script>
 <script>
     $(document).ready(function () {
-        $('#formMovimiento').on('submit', function (event) {
+        $('#formBitacora').on('submit', function (event) {
             event.preventDefault();
 
             $.ajax({

@@ -46,10 +46,8 @@ class Instructor(models.Model):
         db_table = 'Instructor'
 
 class Bitacora(models.Model):
-    aprendiz = models.ForeignKey(Aprendiz, on_delete=models.CASCADE, related_name='Aprendiz',)
-    instructor = models.ForeignKey(Instructor, on_delete=models.PROTECT, verbose_name="Instructor")
-    fecha = models.DateField(null=True, blank=False, verbose_name='Fecha')
-    descripcion = models.TextField(null=True, blank=False, verbose_name='Descripción')
+    actividad = models.CharField(max_length=200, null=True, blank=False, verbose_name='Actividad')
+    imagen = models.ImageField(null=True, blank=False, verbose_name='Imagen')
 
     def __str__(self):
         return f"Bitácoras del aprendiz: {self.aprendiz}"
@@ -58,3 +56,13 @@ class Bitacora(models.Model):
         verbose_name = "Bitácora"
         verbose_name_plural = "Bitácoras"
         db_table = "Bitacora"
+
+class DetalleBitacora(models.Model):
+    aprendiz = models.ForeignKey(Aprendiz, on_delete=models.CASCADE, related_name='Aprendiz',)
+    instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE, related_name='Instructor',)
+    bitacora = models.ForeignKey(Bitacora, on_delete=models.CASCADE, related_name='Bitacora',)
+    fecha = models.DateField(null=True, blank=False, verbose_name='Fecha')
+    descripcion = models.TextField(null=True, blank=False, verbose_name='Descripción')
+
+    def __str__(self):
+        return f"Bitácoras del aprendiz: {self.bitacora}"

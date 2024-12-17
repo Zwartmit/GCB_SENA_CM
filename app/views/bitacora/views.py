@@ -52,30 +52,48 @@ class BitacoraListView(ListView):
 @method_decorator(never_cache, name='dispatch')
 class BitacoraCreateView(CreateView):
     template_name = 'bitacora/crear.html'
-    form_class = BitacoraForm
+    form_class = BitacoraFormSet
 
     @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        formset = BitacoraFormSet()
+        context = {
+            'form': form,
+            'formset': formset,
+            'titulo': 'Registrar nueva bitácora',
+            'entidad': 'Registrar nueva bitácora',
+            'aprendiz': Aprendiz.objects.all(),
+            'listar_url': reverse_lazy('app:bitacora_crear'),
+            'crear_url': reverse_lazy('app:bitacora_lista'),
+        }
+        return render(request, self.template_name, context)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Registrar bitácora'
-        context['entidad'] = 'Registrar bitácora'
-        context['error'] = 'Este bitácora ya está registrada'
-        context['listar_url'] = reverse_lazy('app:bitacora_lista')
-        return context
-    
-    def form_valid(self, form):
-        numero_documento = form.cleaned_data.get('numero_documento')
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        formset = BitacoraFormSet(request.POST)
 
-        if Aprendiz.objects.filter(numero_documento=numero_documento).exists():
-            form.add_error('numero_documento', 'Ya existe un bitacora registrado con este número de documento.')
-            return self.form_invalid(form)
-        
-        response = super().form_valid(form)
-        success_url = reverse('app:bitacora_crear') + '?created=True'
-        return redirect(success_url)
+        if form.is_valid() and formset.is_valid():
+            try:
+                bitacora = form.save()
+
+                detalles = formset.save(commit=False)
+                for detalle in detalles:
+                    detalle.bitacora = bitacora 
+                    detalle.save()
+
+                return JsonResponse({'success': True, 'message': 'Bitacora registrada correctamente.'})
+
+            except Exception as e:
+                print(f"Error al guardar el bitacora: {e}")
+                return JsonResponse({'success': False, 'errors': str(e)})
+
+        else:
+            errors = {
+                'form_errors': form.errors.as_json(),
+                'formset_errors': formset.errors.as_json(),
+            }
+            return JsonResponse({'success': False, 'errors': errors})
     
 # ###### EDITAR ######
 

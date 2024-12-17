@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import BaseInlineFormSet, inlineformset_factory
+from django.forms import inlineformset_factory
 from app.models import *
 
 class AprendizForm(forms.ModelForm):
@@ -77,22 +77,22 @@ class InstructorForm(forms.ModelForm):
             })
         }
 
-class BitacoraForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    class Meta:
-        model = Bitacora
-        fields = ['fecha', 'descripcion']
-        widgets = {
-            'fecha': forms.DateInput(attrs={
-                'placeholder': 'Fecha',
-                'required': True,
-                'class': 'form-control',
-            }),
-            'descripcion': forms.Textarea(attrs={
-                'placeholder': 'Descripción',
-                'required': True,
-                'class': 'form-control',
-            })
-        }
+BitacoraFormSet = inlineformset_factory(
+    Aprendiz,
+    DetalleBitacora,
+    fields=('bitacora', 'fecha', 'descripcion'),
+    widgets={
+        'bitacora': forms.Textarea(attrs={
+            'placeholder': 'Elemento',
+            'required': True,
+            'class': 'form-control',
+        }),
+        'descripcion': forms.Textarea(attrs={
+            'placeholder': 'Descripción',
+            'required': True,
+            'class': 'form-control',
+        }),
+    },
+    extra=1,
+    can_delete=True,
+)

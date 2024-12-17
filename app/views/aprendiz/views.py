@@ -28,7 +28,6 @@ class PerfilAprendiz(ListView):
     def perfil_aprendiz(request):
         aprendiz = {
             'titulo': 'Perfil del aprendiz',
-            'aprendiz': Aprendiz.objects.all()
         }
         return render(request, 'aprendiz/perfil.html',aprendiz)
 
