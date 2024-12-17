@@ -1,0 +1,73 @@
+{% load static %}
+<aside class="main-sidebar sidebar-collapse elevation-2 header-sidebar-gradient">
+    <div class="sidebar">
+        <div class="logo-container text-center">
+            <img src="{% static 'img/logoSENA_B.png' %}" style="padding-top: 3px; height: 80px; width: 80px; filter: drop-shadow(0 0 15px #000000);" alt="Logo SENA" class="logo-image img-fluid">
+            <h1 class="m-0" style="font-size: 40px; color: white; text-shadow: 3px 3px 4px black; padding-top: 10px; font-family: 'Averta Sans Pro', sans-serif; font-weight: 900; font-style: italic;">PSEEP</h1>
+        </div>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" role="menu" data-accordion="false" style="border-radius: 10px;">
+                <h1 style="font-size: 50px; font-style: oblique; color: white; text-align: left; padding-top: 20px;">
+                </h1>
+                <a class="nav-link d-flex justify-content-between align-items-center" data-toggle="" aria-expanded="true" style="color: white; font-size: 13px; border-radius: 10px;">
+                    <div class="d-flex align-items-center" style="border-radius: 10px;">
+                        <i class="nav-icon fas fa-user-" style="font-size: 23px; margin-right: 5px;"></i>
+                        <p class="mb-0" style="font-size: 18px; border-radius: 10px;">Panel de aprendiz</p>
+                    </div>
+                </a>
+                <div class="sidebar-divider" style="border-bottom: 2px solid #ffffff; margin: -5px 10px;"></div>
+                <ul class="list-unstyled pl-4 show" id="submenu2" style="border-radius: 10px; padding-top: 15px;">
+                    <li class="nav-item" style="border-radius: 10px;">
+                        <a class="nav-link d-flex align-items-center" href="{% url 'app:bitacora_crear' %}" style="font-size: 19px; color: white; border-radius: 10px;">
+                            <i class="nav-icon fas fa-plus" style="font-size: 20px; margin-right: 5px; color: white; border-radius: 10px;"></i>
+                            <span class="nav-text" style="border-radius: 10px; font-size: 17px;"><em>Registrar bitácora</em></span>
+                        </a>
+                    </li>
+                    <li class="nav-item" style="border-radius: 10px;">
+                        <a class="nav-link d-flex align-items-center" href="" style="font-size: 19px; color: white; border-radius: 10px;">
+                            <i class="nav-icon fas fa-clipboard-list" style="font-size: 20px; margin-right: 5px; color: white; border-radius: 10px;"></i>
+                            <span class="nav-text" style="border-radius: 10px; font-size: 17px;"><em>Consultar bitácoras</em></span>
+                        </a>
+                    </li>
+                </ul>
+            </ul>
+        </nav>
+    </div>
+</aside>
+<script>
+    $(document).ready(function () {
+        $("#toggle-menu").click(function (e) {
+            e.preventDefault();
+            $(".logo-image").toggle();
+        });
+    });
+    $(document).ready(function () {
+        $("#toggle-menu").click(function (e) {
+            e.preventDefault();
+            $(".nav-icon").toggle();
+        });
+    });
+    $(document).ready(function () {
+        $("#toggle-menu").click(function (e) {
+            e.preventDefault();
+            $(".nav-text").toggle();
+        });
+    });
+    $(document).ready(function () {
+        $("#toggle-menu").click(function (e) {
+            e.preventDefault();
+            $(".sidebar-divider").toggle();
+        });
+    });
+    $(document).ready(function () {
+        $("#toggle-menu").click(function (e) {
+            e.preventDefault();
+            $(".m-0").toggle();
+        });
+    });
+    function delayCollapse(id) {
+        setTimeout(function () {
+            $(id).collapse('hide');
+        }, 3000);
+    }
+</script>

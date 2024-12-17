@@ -1,0 +1,182 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bitácoras - SENA CM</title>
+    <link href="{% static 'img/logoSENA_V.png' %}" rel="icon">
+    <link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/plugins/fontawesome-6.6.0/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/css/adminlte.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+    <style>
+        .card {
+            border-radius: 14px;
+        }
+
+        .card-header {
+            background-color: #094b39;
+            border-radius: 10px;
+            color: white;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body class="hold-transition login-page">
+    <div class="login-box" style="padding-top: 20px; filter: drop-shadow(0 0 5px #000000);">
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <div style="display: block; justify-content: center; align-items: center; padding-bottom: 20px;">
+                    <a><img src="{% static 'img/logoSENA_B.png' %}" style="height: 80px; width: 80px; filter: drop-shadow(0 0 10px #000000);" alt="Logo SENA"></a>
+                </div>
+                <h3 style="font-size: 20px; color: white; filter: drop-shadow(0 0 13px #000000); font-family: 'Averta Sans Pro', sans-serif; font-weight: 780;">Planeación, seguimiento y evaluación de etapa productiva</h3>
+                <div style="display: block; justify-content: center; align-items: center; padding-top: 10px">
+                    <h4 style="font-size: 15px; color: white; filter: drop-shadow(0 0 13px #000000)">SENA - Centro Minero</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <p class="login-box-msg" id="login" style="font-size: 22px; filter: drop-shadow(0 0 15px #000000);"><a href="#">Iniciar sesión</a></p>
+                    <p class="login-box-msg" id="register" style="font-size: 22px; filter: drop-shadow(0 0 15px #000000);"><a href="#">Registrarse</a></p>
+                </div>
+
+                <!-- Formulario de inicio de sesión -->
+                <form id="loginForm" action="#" method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        {{ form.username | add_class:'form-control' | attr:'id:username' | attr:'autocomplete:on' | attr:'placeholder:Ingrese su usuario' }}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope" style="color: white;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        {{ form.password | add_class:'form-control' | attr:'id:password' | attr:'autocomplete:off' | attr:'placeholder:Ingrese su contraseña' }}
+                        <div class="input-group-append">
+                            <div class="input-group-append">
+                                <span type="button" class="btn btn-outline-secondary toggle-password" style="color: rgb(0, 0, 0);">
+                                    <i class="fas fa-eye" id="togglePasswordIcon"></i>
+                                </span>
+                            </div>
+                            <div class="input-group-text">
+                                <span class="fas fa-lock" style="color: rgb(255, 255, 255);"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <p class="mb-1">
+                                    <a href="{% url 'password_reset' %}">Restablecer contraseña</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block" style="filter: drop-shadow(0 0 3px #000000);"><em>Ingresar</em></button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Formulario de registro -->
+                <form id="registerForm" action="#" method="post" style="display: none;">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="registerUsername" placeholder="Nombre de usuario" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user" style="color: white;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" id="registerEmail" placeholder="Correo electrónico" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope" style="color: white;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" id="registerPassword" placeholder="Contraseña" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock" style="color: white;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 offset-6">
+                            <button type="submit" class="btn btn-primary btn-block" style="filter: drop-shadow(0 0 3px #000000);"><em>Registrarse</em></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'lib/adminlte-3.0.4/plugins/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'lib/adminlte-3.0.4/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'lib/adminlte-3.0.4/js/adminlte.min.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const registerLink = document.getElementById("register");
+            const loginLink = document.getElementById("login");
+            const loginForm = document.getElementById("loginForm");
+            const registerForm = document.getElementById("registerForm");
+
+            registerLink.addEventListener("click", function (e) {
+                e.preventDefault();
+                loginForm.style.display = "none";
+                registerForm.style.display = "block";
+            });
+
+            loginLink.addEventListener("click", function (e) {
+                e.preventDefault();
+                registerForm.style.display = "none";
+                loginForm.style.display = "block";
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const togglePasswordButton = document.querySelector('.toggle-password');
+            const passwordField = document.getElementById("password");
+            const togglePasswordIcon = document.getElementById("togglePasswordIcon");
+
+            togglePasswordButton.addEventListener('click', function () {
+                const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordField.setAttribute('type', type);
+
+                if (type === 'password') {
+                    togglePasswordIcon.classList.remove('fa-eye-slash');
+                    togglePasswordIcon.classList.add('fa-eye');
+                } else {
+                    togglePasswordIcon.classList.remove('fa-eye');
+                    togglePasswordIcon.classList.add('fa-eye-slash');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
