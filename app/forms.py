@@ -8,7 +8,7 @@ class AprendizForm(forms.ModelForm):
 
     class Meta:
         model = Aprendiz
-        fields = ['nombre', 'tipo_documento', 'num_documento', 'correo', 'num_ficha', 'programa_formacion', 'fecha_inicio_programa']
+        fields = ['nombre', 'tipo_documento', 'num_documento', 'correo', 'usuario', 'contrasena', 'num_ficha', 'programa_formacion', 'fecha_inicio_programa']
         widgets = {
             'nombre': forms.TextInput(attrs={
                 'placeholder': 'Nombre',
@@ -27,6 +27,16 @@ class AprendizForm(forms.ModelForm):
             }),
             'correo': forms.EmailInput(attrs={
                 'placeholder': 'Correo',
+                'required': True,
+                'class': 'form-control',
+            }),
+            'usuario': forms.TextInput(attrs={
+                'placeholder': 'Usuario',
+                'required': True,
+                'class': 'form-control',
+            }),
+            'contrasena': forms.PasswordInput(attrs={
+                'placeholder': 'Contraseña',
                 'required': True,
                 'class': 'form-control',
             }),
@@ -77,15 +87,56 @@ class InstructorForm(forms.ModelForm):
             })
         }
 
+class EmpresaForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = Empresa
+        fields = ['nombre', 'nit', 'modalidad', 'jefe', 'num_telefono', 'correo']
+        widgets = {
+            'nombre': forms.TextInput(attrs={
+                'placeholder': 'Nombre',
+                'required': True,
+                'class': 'form-control',
+            }),
+            'nit': forms.NumberInput(attrs={
+                'placeholder': 'NIT',
+                'required': True,
+                'class': 'form-control',
+            }),
+            'modalidad': forms.Select(attrs={
+                'placeholder': 'Modalidad',
+                'required': True,
+                'class': 'form-control',
+            }),
+            'jefe': forms.TextInput(attrs={
+                'placeholder': 'Jefe',
+                'required': True,
+                'class': 'form-control',
+            }),
+            'num_telefono': forms.NumberInput(attrs={
+                'placeholder': 'N° de teléfono',
+                'required': True,
+                'class': 'form-control',
+            }),
+            'correo': forms.EmailInput(attrs={
+                'placeholder': 'Correo',
+                'required': True,
+                'class': 'form-control',
+            })
+        }
+
 BitacoraFormSet = inlineformset_factory(
     Aprendiz,
     DetalleBitacora,
     fields=('bitacora', 'fecha', 'descripcion'),
     widgets={
         'bitacora': forms.Textarea(attrs={
-            'placeholder': 'Elemento',
+            'placeholder': 'Actividad realizada',
             'required': True,
             'class': 'form-control',
+            'rows': 2,
         }),
         'descripcion': forms.Textarea(attrs={
             'placeholder': 'Descripción',

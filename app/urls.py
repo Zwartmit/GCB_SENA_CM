@@ -17,6 +17,9 @@ urlpatterns = [
     path('instructor/editar/<int:pk>/', InstructorUpdateView.as_view(), name='instructor_editar'),
     path('instructor/eliminar/<int:pk>/', InstructorDeleteView.as_view(), name='instructor_eliminar'),
     
+    # path('empresa/listar/', EmpresaListView.as_view(), name='empresa_lista'),
+    # path('empresa/crear/', EmpresaCreateView.as_view(), name='empresa_crear'),
+    
     path('bitacora/listar/', BitacoraListView.as_view(), name='bitacora_lista'),
     path('bitacora/crear/', BitacoraCreateView.as_view(), name='bitacora_crear'),
     # path('editar-perfil/', editar_perfil_aprendiz, name='editar_perfil_aprendiz'),

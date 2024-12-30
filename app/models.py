@@ -1,6 +1,6 @@
 from django.db import models
 from django.forms import ValidationError
-from .choices import programas
+from .choices import programas, modalidades
 
 class Aprendiz(models.Model):
     class TipoDocumento(models.TextChoices):
@@ -13,6 +13,8 @@ class Aprendiz(models.Model):
     tipo_documento = models.CharField(max_length=3, choices=TipoDocumento.choices, default=TipoDocumento.CC, verbose_name="Tipo de documento")
     num_documento = models.PositiveIntegerField(null=True, blank=False, verbose_name='Nº de documento')
     correo = models.EmailField(null=True, blank=False, verbose_name='Correo')
+    usuario = models.CharField(max_length=200, null=True, blank=False, verbose_name='Usuario')
+    contrasena = models.CharField(max_length=200, null=True, blank=False, verbose_name='Contraseña')
     num_ficha = models.PositiveIntegerField(null=True, blank=False, verbose_name='Ficha')
     programa_formacion = models.CharField(max_length=100, choices=[(prog, prog) for prog in programas], null=True, blank=False, verbose_name='Programa de formación')
     fecha_inicio_programa = models.DateField(null=True, blank=False, verbose_name='Fecha de inicio del programa de formación')
@@ -44,6 +46,22 @@ class Instructor(models.Model):
         verbose_name = "Instructor"
         verbose_name_plural = "Instructores"
         db_table = 'Instructor'
+
+class Empresa(models.Model):
+    nombre = models.CharField(max_length=200, null=True, blank=False, verbose_name='Nombre')
+    nit = models.PositiveIntegerField(null=True, blank=False, verbose_name='NIT')
+    modalidad = models.CharField(max_length=100, choices=[(mod, mod) for mod in modalidades], null=True, blank=False, verbose_name='Modalidad')
+    jefe = models.CharField(max_length=200, null=True, blank=False, verbose_name='Jefe')
+    num_telefono = models.PositiveIntegerField(null=True, blank=False, verbose_name='Nº de teléfono')
+    correo = models.EmailField(null=True, blank=False, verbose_name='Correo')
+
+    def __str__(self):
+        return f"Empresa: {self.nombre}"
+
+    class Meta:
+        verbose_name = "Empresa"
+        verbose_name_plural = "Empresas"
+        db_table = 'Empresa'
 
 class Bitacora(models.Model):
     actividad = models.CharField(max_length=200, null=True, blank=False, verbose_name='Actividad')

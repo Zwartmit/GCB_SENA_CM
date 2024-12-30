@@ -59,13 +59,12 @@
                     <p class="login-box-msg" id="register" style="font-size: 22px; filter: drop-shadow(0 0 15px #000000);"><a href="#">Registrarse</a></p>
                 </div>
 
-                <!-- Formulario de inicio de sesión -->
                 <form id="loginForm" action="#" method="post">
                     {% csrf_token %}
                     <div class="input-group mb-3">
                         {{ form.username | add_class:'form-control' | attr:'id:username' | attr:'autocomplete:on' | attr:'placeholder:Ingrese su usuario' }}
                         <div class="input-group-append">
-                            <div class="input-group-text">
+                            <div class="input-group-text" style="width: 40px;">
                                 <span class="fas fa-envelope" style="color: white;"></span>
                             </div>
                         </div>
@@ -78,7 +77,7 @@
                                     <i class="fas fa-eye" id="togglePasswordIcon"></i>
                                 </span>
                             </div>
-                            <div class="input-group-text">
+                            <div class="input-group-text" style="width: 40px;">
                                 <span class="fas fa-lock" style="color: rgb(255, 255, 255);"></span>
                             </div>
                         </div>
@@ -96,40 +95,17 @@
                         </div>
                     </div>
                 </form>
-
-                <!-- Formulario de registro -->
                 <form id="registerForm" action="#" method="post" style="display: none;">
                     {% csrf_token %}
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="registerUsername" placeholder="Nombre de usuario" required>
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-user" style="color: white;"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="email" class="form-control" id="registerEmail" placeholder="Correo electrónico" required>
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope" style="color: white;"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control" id="registerPassword" placeholder="Contraseña" required>
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock" style="color: white;"></span>
-                            </div>
-                        </div>
-                    </div>
+                    {{ form.as_p }}
                     <div class="row">
                         <div class="col-6 offset-6">
-                            <button type="submit" class="btn btn-primary btn-block" style="filter: drop-shadow(0 0 3px #000000);"><em>Registrarse</em></button>
+                            <button type="submit" class="btn btn-primary btn-block" style="filter: drop-shadow(0 0 3px #000000);">
+                                <em>Registrarse</em>
+                            </button>
                         </div>
                     </div>
-                </form>
+                </form>                      
             </div>
         </div>
     </div>

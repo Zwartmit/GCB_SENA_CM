@@ -15,8 +15,8 @@
             </div>
             <div class="card-header" style="background-color: #d4d4d4; color: black; text-align: center;">
                 <h2 style="display: flex; justify-content: center; align-items: center;"><b>Información general</b></h2>
-                {% for a in aprendiz %}
                 <div class="container-mov">
+                    {% for a in aprendiz %}
                     <div class="form-group row mt-3">
                         <div class="col-md-4">
                             <label>Aprendiz:<br></label>
@@ -49,18 +49,58 @@
                             <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ a.fecha_inicio_programa }}</p>
                         </div>
                     </div>
-                    <div class="form-group row mt-2">
-                        <div class="col-md-6">
-                            <label for="proyecto">Proyectos asociados:</label>
-                            {{ form.proyecto|add_class:'form-control' }}
+                    {% endfor %}
+                    <div style="padding-top: 10px;"></div>
+                    {% for i in instructor %}
+                    <div class="form-group row mt-3">
+                        <div class="col-md-4">
+                            <label>Instructor:<br></label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ i.nombre }}</p>
                         </div>
-                        <div class="col-md-6">
-                            <label for="obs_general">Observaciones generales:</label>
-                            {{ form.obs_general|add_class:'form-control' }}
+                        <div class="col-md-2">
+                            <label>Tipo de documento:</label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ i.tipo_documento }}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <label>N° de documento:</label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ i.num_documento }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Correo:</label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ i.correo }}</p>
                         </div>
                     </div>
+                    {% endfor %}
+                    <div style="padding-top: 10px;"></div>
+                    {% for e in empresa %}
+                    <div class="form-group row mt-3">
+                        <div class="col-md-5">
+                            <label>Empresa:<br></label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ e.nombre }}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <label>NIT:</label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ e.nit }}</p>
+                        </div>
+                        <div class="col-md-5">
+                            <label>Modalidad:<br></label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ e.modalidad }}</p>
+                        </div>
+                        <div class="col-md-5">
+                            <label>Jefe inmediato:</label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ e.jefe }}</p>
+                        </div>
+                        <div class="col-md-2">
+                        <label>N° de documento:</label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ e.num_telefono }}</p>
+                        </div>
+                        <div class="col-md-5">
+                            <label>Correo:</label>
+                            <p style="background: #ffffff; border: 0.5px solid #000000; border-radius: 10px;">{{ e.correo }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
             {% csrf_token %}
             <div class="card-header" style="background-color: #d4d4d4; color: black; text-align: center;">
@@ -92,50 +132,17 @@
                             </div>
                         </div>
                         {% endif %}
-                        <div class="col-md-6">
-                            <label for="{{ form.elemento.id_for_label }}">Elemento:</label>
-                            {{ form.elemento|add_class:'form-control' }}
-                            {% for error in form.elemento.errors %}
+                        <div class="col-md-12">
+                            <label for="{{ form.bitacora.id_for_label }}">Actividad:</label>
+                            {{ form.bitacora|add_class:'form-control' }}
+                            {% for error in form.bitacora.errors %}
                             <div class="text-danger">{{ error }}</div>
                             {% endfor %}
-                        </div>
-                        <div class="col-md-3">
-                            <label for="{{ form.cantidad_recibida.id_for_label }}">Cantidad recibida:</label>
-                            {{ form.cantidad_recibida|add_class:'form-control' }}
-                            {% for error in form.cantidad_recibida.errors %}
-                            <div class="text-danger">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-                        <div class="col-md-3">
-                            <label for="{{ form.cantidad_contratada.id_for_label }}">Cantidad contratada:</label>
-                            {{ form.cantidad_contratada|add_class:'form-control' }}
-                            {% for error in form.cantidad_contratada.errors %}
-                            <div class="text-danger">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-                        <div class="col-md-9">
-                            <label for="{{ form.observaciones.id_for_label }}">Observaciones:</label>
-                            {{ form.observaciones|add_class:'form-control' }}
-                            {% for error in form.observaciones.errors %}
-                            <div class="text-danger">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-                        <div class="col-md-3">
-                            <label for="{{ form.saldo.id_for_label }}">Saldo pendiente de entrega:</label>
-                            {{ form.saldo|add_class:'form-control' }}
-                            {% for error in form.saldo.errors %}
-                            <div class="text-danger">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-                        <div class="col-md-12 d-flex justify-content-end" style="margin-top: 10px;">
-                            {% if not forloop.first %}
-                            <button type="button" class="btn btn-danger remove-form fas fa-trash"></button>
-                            {% endif %}
                         </div>
                     </div>
                     {% endfor %}
                 </div>
-                <button type="button" class="btn btn-primary" id="add-form">Agregar elemento</button>
+                <button type="button" class="btn btn-primary" id="add-form">Agregar actividad</button>
             </div>
         </div>
     </div>

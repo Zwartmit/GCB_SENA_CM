@@ -64,6 +64,8 @@ class BitacoraCreateView(CreateView):
             'titulo': 'Registrar nueva bitácora',
             'entidad': 'Registrar nueva bitácora',
             'aprendiz': Aprendiz.objects.all(),
+            'instructor': Instructor.objects.all(),
+            'empresa': Empresa.objects.all(),
             'listar_url': reverse_lazy('app:bitacora_crear'),
             'crear_url': reverse_lazy('app:bitacora_lista'),
         }

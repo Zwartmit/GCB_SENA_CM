@@ -101,3 +101,13 @@ programas = [
     "Tnlgo. en técnicas de desarrollo gráfico de proyectos de construcción",
     "Tnlgo. en topografía"
 ]
+
+modalidades = [
+    "Contrato de aprendizaje",
+    "Vínculo laboral o contractual",
+    "Proyecto productivo",
+    "Apoyo a una unidad productiva familiar",
+    "Apoyo a institución estatal nacional, territorial, ONG o entidad sin ánimo de lucro",
+    "Monitoria",
+    "Pasantia",
+]
