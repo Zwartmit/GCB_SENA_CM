@@ -54,6 +54,7 @@ class AprendizForm(forms.ModelForm):
                 'placeholder': 'Fecha de inicio del programa de formación',
                 'required': True,
                 'class': 'form-control',
+                'type': 'date',
             }),
         }
 
@@ -87,63 +88,7 @@ class InstructorForm(forms.ModelForm):
             })
         }
 
-class EmpresaForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
+class BitacoraForm(forms.ModelForm):
     class Meta:
-        model = Empresa
-        fields = ['nombre', 'nit', 'modalidad', 'jefe', 'num_telefono', 'correo']
-        widgets = {
-            'nombre': forms.TextInput(attrs={
-                'placeholder': 'Nombre',
-                'required': True,
-                'class': 'form-control',
-            }),
-            'nit': forms.NumberInput(attrs={
-                'placeholder': 'NIT',
-                'required': True,
-                'class': 'form-control',
-            }),
-            'modalidad': forms.Select(attrs={
-                'placeholder': 'Modalidad',
-                'required': True,
-                'class': 'form-control',
-            }),
-            'jefe': forms.TextInput(attrs={
-                'placeholder': 'Jefe',
-                'required': True,
-                'class': 'form-control',
-            }),
-            'num_telefono': forms.NumberInput(attrs={
-                'placeholder': 'N° de teléfono',
-                'required': True,
-                'class': 'form-control',
-            }),
-            'correo': forms.EmailInput(attrs={
-                'placeholder': 'Correo',
-                'required': True,
-                'class': 'form-control',
-            })
-        }
-
-BitacoraFormSet = inlineformset_factory(
-    Aprendiz,
-    DetalleBitacora,
-    fields=('bitacora', 'fecha', 'descripcion'),
-    widgets={
-        'bitacora': forms.Textarea(attrs={
-            'placeholder': 'Actividad realizada',
-            'required': True,
-            'class': 'form-control',
-            'rows': 2,
-        }),
-        'descripcion': forms.Textarea(attrs={
-            'placeholder': 'Descripción',
-            'required': True,
-            'class': 'form-control',
-        }),
-    },
-    extra=1,
-    can_delete=True,
-)
+        model = Bitacora
+        fields = ['bitacora']

@@ -52,12 +52,12 @@ class BitacoraListView(ListView):
 @method_decorator(never_cache, name='dispatch')
 class BitacoraCreateView(CreateView):
     template_name = 'bitacora/crear.html'
-    form_class = BitacoraFormSet
+    form_class = BitacoraForm
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         form = self.form_class()
-        formset = BitacoraFormSet()
+        formset = BitacoraForm()
         context = {
             'form': form,
             'formset': formset,
@@ -65,38 +65,40 @@ class BitacoraCreateView(CreateView):
             'entidad': 'Registrar nueva bitácora',
             'aprendiz': Aprendiz.objects.all(),
             'instructor': Instructor.objects.all(),
-            'empresa': Empresa.objects.all(),
-            'listar_url': reverse_lazy('app:bitacora_crear'),
-            'crear_url': reverse_lazy('app:bitacora_lista'),
+            'listar_url': reverse_lazy('app:bitacora_lista'),
+            'crear_url': reverse_lazy('app:bitacora_crear'),
         }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        formset = BitacoraFormSet(request.POST)
+        form = self.form_class(request.POST, request.FILES)  # Manejar datos POST y archivos
+        formset = BitacoraForm(request.POST, request.FILES)
 
         if form.is_valid() and formset.is_valid():
             try:
+                # Guardar la bitácora
                 bitacora = form.save()
 
+                # Guardar los detalles de la bitácora (si hay formset)
                 detalles = formset.save(commit=False)
                 for detalle in detalles:
-                    detalle.bitacora = bitacora 
+                    detalle.bitacora = bitacora  # Asocia los detalles a la bitácora
                     detalle.save()
 
-                return JsonResponse({'success': True, 'message': 'Bitacora registrada correctamente.'})
+                return JsonResponse({'success': True, 'message': 'Bitácora registrada correctamente.'})
 
             except Exception as e:
-                print(f"Error al guardar el bitacora: {e}")
+                print(f"Error al guardar la bitácora: {e}")
                 return JsonResponse({'success': False, 'errors': str(e)})
 
         else:
+            # Capturar errores de validación en el formulario y el formset
             errors = {
                 'form_errors': form.errors.as_json(),
                 'formset_errors': formset.errors.as_json(),
             }
             return JsonResponse({'success': False, 'errors': errors})
-    
+        
 # ###### EDITAR ######
 
 # @method_decorator(never_cache, name='dispatch')

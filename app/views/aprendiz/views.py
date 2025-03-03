@@ -74,11 +74,12 @@ class AprendizCreateView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)    
         context['titulo'] = 'Registrar aprendiz'
         context['entidad'] = 'Registrar aprendiz'
         context['error'] = 'Este aprendiz ya está registrado'
         context['listar_url'] = reverse_lazy('app:aprendiz_lista')
+        context['form'] = self.get_form() 
         return context
     
     def form_valid(self, form):

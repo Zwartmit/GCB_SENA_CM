@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf.urls.static import static
+from pseep import settings
 from app.views import *
 from app.views.aprendiz.views import *
 from app.views.instructor.views import *
@@ -24,4 +26,4 @@ urlpatterns = [
     path('bitacora/crear/', BitacoraCreateView.as_view(), name='bitacora_crear'),
     # path('editar-perfil/', editar_perfil_aprendiz, name='editar_perfil_aprendiz'),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

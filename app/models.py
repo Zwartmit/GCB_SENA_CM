@@ -47,25 +47,8 @@ class Instructor(models.Model):
         verbose_name_plural = "Instructores"
         db_table = 'Instructor'
 
-class Empresa(models.Model):
-    nombre = models.CharField(max_length=200, null=True, blank=False, verbose_name='Nombre')
-    nit = models.PositiveIntegerField(null=True, blank=False, verbose_name='NIT')
-    modalidad = models.CharField(max_length=100, choices=[(mod, mod) for mod in modalidades], null=True, blank=False, verbose_name='Modalidad')
-    jefe = models.CharField(max_length=200, null=True, blank=False, verbose_name='Jefe')
-    num_telefono = models.PositiveIntegerField(null=True, blank=False, verbose_name='Nº de teléfono')
-    correo = models.EmailField(null=True, blank=False, verbose_name='Correo')
-
-    def __str__(self):
-        return f"Empresa: {self.nombre}"
-
-    class Meta:
-        verbose_name = "Empresa"
-        verbose_name_plural = "Empresas"
-        db_table = 'Empresa'
-
 class Bitacora(models.Model):
-    actividad = models.CharField(max_length=200, null=True, blank=False, verbose_name='Actividad')
-    imagen = models.ImageField(null=True, blank=False, verbose_name='Imagen')
+    bitacora = models.FileField(upload_to='bitacoras/', null=True, blank=False, verbose_name='Archivo')
 
     def __str__(self):
         return f"Bitácoras del aprendiz: {self.aprendiz}"
@@ -84,3 +67,8 @@ class DetalleBitacora(models.Model):
 
     def __str__(self):
         return f"Bitácoras del aprendiz: {self.bitacora}"
+
+    class Meta:
+        verbose_name = "DetalleBitácora"
+        verbose_name_plural = "DetalleBitácoras"
+        db_table = "DetalleBitacora"
