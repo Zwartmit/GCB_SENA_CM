@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}{{ apprentice.first_name }} | GCB SENA CM{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">Bitácoras de {{ apprentice.first_name }} {{ apprentice.last_name }}</h1>
+        <a href="{% url 'bitacoras:apprentice_list' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Volver
+        </a>
+    </div>
+    
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Información del aprendiz</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Documento:</strong> {{ apprentice.get_document_type_display }}: {{ apprentice.document_number }}</p>
+                    <p><strong>Correo electrónico:</strong> {{ apprentice.email }}</p>
+                    <p><strong>Teléfono:</strong> {{ apprentice.phone_number }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Programa de formación:</strong> {{ apprentice.apprentice_profile.training_program }}</p>
+                    <p><strong>Número de ficha:</strong> {{ apprentice.apprentice_profile.record_number }}</p>
+                    <p><strong>Empresa:</strong> {{ apprentice.apprentice_profile.linked_company }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Lista de bitácoras</h6>
+        </div>
+        <div class="card-body">
+            {% if bitacoras %}
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="bitacorasTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre del archivo</th>
+                                <th>Fecha de subida</th>
+                                <th>Descripción</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bitacora in bitacoras %}
+                                <tr>
+                                    <td>{{ bitacora.id }}</td>
+                                    <td>{{ bitacora.filename }}</td>
+                                    <td>{{ bitacora.upload_date|date:"d M, Y" }}</td>
+                                    <td>{{ bitacora.description|truncatechars:50 }}</td>
+                                    <td>
+                                        <a href="{{ bitacora.file.url }}" class="btn btn-sm btn-info" title="Descargar">
+                                            <i class="fas fa-download"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-folder-open fa-4x text-gray-300 mb-3"></i>
+                    <h5>No se encontraron bitácoras</h5>
+                    <p>Este aprendiz aún no ha subido ninguna bitácora.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        $('#bitacorasTable').DataTable();
+    });
+</script>
+{% endblock %}

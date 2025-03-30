@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+
+{% block title %}Registro | GCB SENA CM{% endblock %}
+
+{% block auth_content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-lg mt-5 mb-5">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <img src="/static/img/LogoSENA_N.jpg" alt="Logo" height="90">
+                        <h2 class="mt-3">GCB SENA CM</h2>
+                        <h4>Crear una nueva cuenta</h4>
+                    </div>
+                    
+                    {% if user_type %}
+                        <!-- Tipo de usuario seleccionado, mostrar formulario de registro -->
+                        <form method="post" action="{% if user_type == 'apprentice' %}{% url 'accounts:register_apprentice' %}{% else %}{% url 'accounts:register_instructor' %}{% endif %}">
+                            {% csrf_token %}
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="id_first_name" class="form-label">Nombre</label>
+                                    {{ form.first_name }}
+                                    {% if form.first_name.errors %}
+                                        <div class="text-danger">
+                                            {{ form.first_name.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="id_last_name" class="form-label">Apellido</label>
+                                    {{ form.last_name }}
+                                    {% if form.last_name.errors %}
+                                        <div class="text-danger">
+                                            {{ form.last_name.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="id_document_type" class="form-label">Tipo de documento</label>
+                                    {{ form.document_type }}
+                                    {% if form.document_type.errors %}
+                                        <div class="text-danger">
+                                            {{ form.document_type.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="id_document_number" class="form-label">Número de documento</label>
+                                    {{ form.document_number }}
+                                    {% if form.document_number.errors %}
+                                        <div class="text-danger">
+                                            {{ form.document_number.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="id_email" class="form-label">Correo electrónico</label>
+                                    {{ form.email }}
+                                    {% if form.email.errors %}
+                                        <div class="text-danger">
+                                            {{ form.email.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="id_phone_number" class="form-label">Número de teléfono</label>
+                                    {{ form.phone_number }}
+                                    {% if form.phone_number.errors %}
+                                        <div class="text-danger">
+                                            {{ form.phone_number.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                    {% if user_type == 'apprentice' %}
+                        <!-- Campos específicos para aprendices -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id_training_program" class="form-label">Programa de formación</label>
+                                {{ form.training_program }}
+                                {% if form.training_program.errors %}
+                                    <div class="text-danger">
+                                        {{ form.training_program.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="id_record_number" class="form-label">Número de ficha</label>
+                                {{ form.record_number }}
+                                {% if form.record_number.errors %}
+                                    <div class="text-danger">
+                                        {{ form.record_number.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_linked_company" class="form-label">Empresa donde realiza las prácticas</label>
+                            {{ form.linked_company }}
+                            {% if form.linked_company.errors %}
+                                <div class="text-danger">
+                                    {{ form.linked_company.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id_school_stage_start" class="form-label">Inicio de etapa lectiva</label>
+                                {{ form.school_stage_start }}
+                                {% if form.school_stage_start.errors %}
+                                    <div class="text-danger">
+                                        {{ form.school_stage_start.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="id_productive_stage_start" class="form-label">Inicio de etapa productiva</label>
+                                {{ form.productive_stage_start }}
+                                {% if form.productive_stage_start.errors %}
+                                    <div class="text-danger">
+                                        {{ form.productive_stage_start.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_username" class="form-label">Nombre de usuario</label>
+                            {{ form.username }}
+                            {% if form.username.errors %}
+                                <div class="text-danger">
+                                    {{ form.username.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_password1" class="form-label">Contraseña</label>
+                            {{ form.password1 }}
+                            <div class="form-text">
+                                {{ form.password1.help_text }}
+                            </div>
+                            {% if form.password1.errors %}
+                                <div class="text-danger">
+                                    {{ form.password1.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="id_password2" class="form-label">Confirmar contraseña</label>
+                            {{ form.password2 }}
+                            {% if form.password2.errors %}
+                                <div class="text-danger">
+                                    {{ form.password2.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                    </div>
+                    </form>
+
+                    {% else %}
+                        <!-- No se ha seleccionado un tipo de usuario, mostrar selección -->
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-user-graduate fa-4x mb-3 text-primary"></i>
+                                        <h4>Aprendiz</h4>
+                                        <p>Regístrate como aprendiz para subir y gestionar tus bitácoras.</p>
+                                        <a href="{% url 'accounts:register_apprentice' %}" class="btn btn-primary">Registrarse como Aprendiz</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-chalkboard-teacher fa-4x mb-3 text-primary"></i>
+                                        <h4>Instructor</h4>
+                                        <p>Regístrate como instructor para vincular y supervisar aprendices.</p>
+                                        <a href="{% url 'accounts:register_instructor' %}" class="btn btn-primary">Registrarse como Instructor</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <hr>
+
+                    <div class="text-center">
+                        <p>¿Ya tienes una cuenta?</p>
+                        <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary">Iniciar Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

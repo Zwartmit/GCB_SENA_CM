@@ -1,3 +1,4 @@
 from django.db import models
 
-# Create your models here.
+# Dashboard models
+# Note: The dashboard app mainly uses views and templates, not models.

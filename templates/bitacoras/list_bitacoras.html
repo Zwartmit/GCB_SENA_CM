@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Mis bitácoras | GCB SENA CM{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">Mis bitácoras</h1>
+        <a href="{% url 'bitacoras:upload_bitacora' %}" class="btn btn-primary">
+            <i class="fas fa-upload me-2"></i> Subir nueva bitácora
+        </a>
+    </div>
+    
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Lista de bitácoras</h6>
+        </div>
+        <div class="card-body">
+            {% if bitacoras %}
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="bitacorasTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre del archivo</th>
+                                <th>Fecha de subida</th>
+                                <th>Descripción</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bitacora in bitacoras %}
+                                <tr>
+                                    <td>{{ bitacora.id }}</td>
+                                    <td>{{ bitacora.filename }}</td>
+                                    <td>{{ bitacora.upload_date|date:"d M, Y" }}</td>
+                                    <td>{{ bitacora.description|truncatechars:50 }}</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="{{ bitacora.file.url }}" class="btn btn-sm btn-info" title="Descargar">
+                                                <i class="fas fa-download"></i>
+                                            </a>
+                                            <a href="{% url 'bitacoras:delete_bitacora' bitacora.id %}" class="btn btn-sm btn-danger" title="Eliminar">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-folder-open fa-4x text-gray-300 mb-3"></i>
+                    <h5>No se encontraron bitácoras</h5>
+                    <p>Aún no has subido ninguna bitácora.</p>
+                    <a href="{% url 'bitacoras:upload_bitacora' %}" class="btn btn-primary mt-2">
+                        <i class="fas fa-upload me-2"></i> Subir bitácora
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        $('#bitacorasTable').DataTable();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,33 @@
+<div class="bg-dark text-white" id="sidebar-wrapper">
+    <div class="sidebar-heading border-bottom bg-primary">
+        <img src="/static/img/LogoSENA_N.jpg" alt="Logo" height="40">
+        <span class="ms-2">Gestión y control de bitácoras - GCB SENA CM</span>
+    </div>
+    <div class="list-group list-group-flush">
+        <a href="{% url 'dashboard:dashboard' %}" class="list-group-item list-group-item-action bg-dark text-white">
+            <i class="fas fa-tachometer-alt me-2"></i> Panel de control
+        </a>
+        
+        {% if user.user_type == 'apprentice' %}
+            <!-- Elementos del Menú para Aprendices -->
+            <a href="{% url 'bitacoras:upload_bitacora' %}" class="list-group-item list-group-item-action bg-dark text-white">
+                <i class="fas fa-upload me-2"></i> Subir bitácoras
+            </a>
+            <a href="{% url 'bitacoras:list_bitacoras' %}" class="list-group-item list-group-item-action bg-dark text-white">
+                <i class="fas fa-book me-2"></i> Consultar bitácoras
+            </a>
+        {% elif user.user_type == 'instructor' %}
+            <!-- Elementos del Menú para Instructores -->
+            <a href="{% url 'bitacoras:link_apprentice' %}" class="list-group-item list-group-item-action bg-dark text-white">
+                <i class="fas fa-link me-2"></i> Vincular aprendices
+            </a>
+            <a href="{% url 'bitacoras:apprentice_list' %}" class="list-group-item list-group-item-action bg-dark text-white">
+                <i class="fas fa-users me-2"></i> Consultar aprendices
+            </a>
+        {% endif %}
+        
+        <a href="{% url 'dashboard:profile' %}" class="list-group-item list-group-item-action bg-dark text-white">
+            <i class="fas fa-user me-2"></i> Perfil
+        </a>
+    </div>
+</div>

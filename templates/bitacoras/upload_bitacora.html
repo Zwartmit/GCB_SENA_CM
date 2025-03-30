@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Subir bitácora | GCB SENA CM{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">Subir bitácora</h1>
+        <a href="{% url 'bitacoras:list_bitacoras' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Volver
+        </a>
+    </div>
+    
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Subir una nueva bitácora</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="id_file" class="form-label">Archivo</label>
+                    {{ form.file }}
+                    {% if form.file.errors %}
+                        <div class="text-danger">
+                            {{ form.file.errors }}
+                        </div>
+                    {% endif %}
+                    <div class="form-text">
+                        Solo se permiten archivos de documentos (PDF, DOC, DOCX, etc.).
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="id_description" class="form-label">Descripción (Opcional)</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="text-danger">
+                            {{ form.description.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-upload me-2"></i> Subir bitácora
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

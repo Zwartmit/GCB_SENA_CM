@@ -1,9 +1,6 @@
 django
-django-widget-tweaks
-mysqlclient
-PyMySQL
-cryptography
-django-backup
-django-select2
-openpyxl
-reportlab
+django-crispy-forms
+crispy-bootstrap5
+dj-database-url
+psycopg2-binary
+sendgrid
