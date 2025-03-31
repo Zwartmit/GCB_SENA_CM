@@ -21,7 +21,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.success(request, f"¡Bienvenido de nuevo, {user.first_name}!")
+                messages.success(request, f"¡Hola de nuevo, {user.first_name}!")
                 return redirect('dashboard:dashboard')
         else:
             messages.error(request, "Usuario o contraseña inválidos.")
@@ -47,7 +47,7 @@ def register_apprentice(request):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
-            messages.success(request, f"Cuenta creada con éxito. ¡Bienvenido, {user.first_name}!")
+            messages.success(request, f"Cuenta creada con éxito. ¡Hola, {user.first_name}!")
             return redirect('dashboard:dashboard')
         else:
             for field, errors in form.errors.items():
@@ -58,7 +58,7 @@ def register_apprentice(request):
     
     return render(request, 'accounts/register.html', {
         'form': form,
-        'user_type': 'aprendiz'
+        'user_type': 'apprentice'
     })
 
 def register_instructor(request):
@@ -73,7 +73,7 @@ def register_instructor(request):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
-            messages.success(request, f"Cuenta creada con éxito. ¡Bienvenido, {user.first_name}!")
+            messages.success(request, f"Cuenta creada con éxito. ¡Hola, {user.first_name}!")
             return redirect('dashboard:dashboard')
         else:
             for field, errors in form.errors.items():

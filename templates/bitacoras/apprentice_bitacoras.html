@@ -6,9 +6,6 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3">Bitácoras de {{ apprentice.first_name }} {{ apprentice.last_name }}</h1>
-        <a href="{% url 'bitacoras:apprentice_list' %}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left me-2"></i> Volver
-        </a>
     </div>
     
     <div class="card shadow mb-4">
@@ -56,7 +53,7 @@
                                     <td>{{ bitacora.upload_date|date:"d M, Y" }}</td>
                                     <td>{{ bitacora.description|truncatechars:50 }}</td>
                                     <td>
-                                        <a href="{{ bitacora.file.url }}" class="btn btn-sm btn-info" title="Descargar">
+                                        <a href="{{ bitacora.file.url }}" class="btn btn-sm text-white" style="background-color: #034231;" title="Descargar" target="_blank">
                                             <i class="fas fa-download"></i>
                                         </a>
                                     </td>

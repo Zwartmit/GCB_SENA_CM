@@ -21,7 +21,7 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=15, validators=[
         RegexValidator(
             regex=r'^\+?1?\d{9,15}$',
-            message="El número de teléfono debe ingresarse en el formato: '+999999999'. Se permiten hasta 15 dígitos."
+            message="El número de teléfono debe tener más de 9 dígitos."
         )
     ])
     

@@ -13,11 +13,8 @@
                     <h6 class="m-0 font-weight-bold text-primary">Información del perfil</h6>
                 </div>
                 <div class="card-body text-center">
-                    <div class="mb-3">
-                        <i class="fas fa-user-circle fa-7x text-gray-300"></i>
-                    </div>
                     <h5>{{ user.first_name }} {{ user.last_name }}</h5>
-                    <p class="badge bg-primary mb-3">{{ user.get_user_type_display }}</p>
+                    <p class="badge mb-3" style="background-color: #034231;">{{ user.get_user_type_display }}</p>
                     <ul class="list-group text-start mb-4">
                         <li class="list-group-item"><strong>Usuario:</strong> {{ user.username }}</li>
                         <li class="list-group-item"><strong>Correo electrónico:</strong> {{ user.email }}</li>
@@ -40,6 +37,8 @@
                     </h6>
                 </div>
                 <div class="card-body">
+
+                    <!-- Información del aprendiz -->
                     {% if user.user_type == 'apprentice' %}
                         <div class="row">
                             <div class="col-md-6 mb-3">
@@ -67,39 +66,7 @@
                                 <p class="form-control">{{ profile.productive_stage_start|date:"d M, Y" }}</p>
                             </div>
                         </div>
-                        
-                        <hr>
-                        
-                        <h6 class="mb-3">Instructores vinculados</h6>
-                        
-                        {% if user.assigned_instructors.all %}
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Nombre</th>
-                                            <th>Correo electrónico</th>
-                                            <th>Teléfono</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for instructor in user.assigned_instructors.all %}
-                                            <tr>
-                                                <td>{{ instructor.first_name }} {{ instructor.last_name }}</td>
-                                                <td>{{ instructor.email }}</td>
-                                                <td>{{ instructor.phone_number }}</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        {% else %}
-                            <div class="alert alert-info">
-                                <i class="fas fa-info-circle me-2"></i>
-                                Aún no tienes instructores vinculados a tu cuenta.
-                            </div>
-                        {% endif %}
-                        
+                    <!-- Información del instructor -->
                     {% elif user.user_type == 'instructor' %}
                         <h6 class="mb-3">Aprendices vinculados</h6>
                         
@@ -121,8 +88,8 @@
                                                 <td>{{ apprentice.email }}</td>
                                                 <td>{{ apprentice.apprentice_profile.training_program }}</td>
                                                 <td>
-                                                    <a href="{% url 'bitacoras:apprentice_bitacoras' apprentice.id %}" class="btn btn-sm btn-info">
-                                                        <i class="fas fa-book"></i> Ver bitácoras
+                                                    <a href="{% url 'bitacoras:apprentice_bitacoras' apprentice.id %}" class="btn btn-sm text-white" style="background-color: #034231;">
+                                                        Ver bitácoras
                                                     </a>
                                                 </td>
                                             </tr>
@@ -130,17 +97,12 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="mt-3">
-                                <a href="{% url 'bitacoras:link_apprentice' %}" class="btn btn-primary">
-                                    <i class="fas fa-link me-2"></i> Vincular nuevo aprendiz
-                                </a>
-                            </div>
                         {% else %}
                             <div class="alert alert-info">
                                 <i class="fas fa-info-circle me-2"></i>
                                 Aún no has vinculado aprendices.
                             </div>
-                            <a href="{% url 'bitacoras:link_apprentice' %}" class="btn btn-primary">
+                            <a href="{% url 'bitacoras:link_apprentice' %}" class="btn text-white" style="background-color: #034231;">
                                 <i class="fas fa-link me-2"></i> Vincular aprendiz
                             </a>
                         {% endif %}

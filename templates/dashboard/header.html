@@ -1,14 +1,20 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-    <div class="container-fluid">
-        <button class="btn btn-primary" id="sidebarToggle">
+<nav class="navbar navbar-expand-lg navbar-light border-bottom" style="background-color: #034231;">
+    <div class="container-fluid position-relative">
+        <button class="btn text-white d-lg-none" id="sidebarToggle">
             <i class="fas fa-bars"></i>
         </button>
-        <h4 class="ms-3 my-0">Panel de administración</h4>
         
+        <h4 id="panelTitle" class="position-absolute start-50 translate-middle-x my-0 text-white">
+            Panel de administración
+        </h4>
+
         <div class="dropdown ms-auto">
             <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-user-circle me-1"></i>
-                {{ user.first_name }} {{ user.last_name }}
+                
+                <span class="d-none d-lg-inline">
+                    {{ user.first_name }} {{ user.last_name }}
+                </span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                 <li>
@@ -27,16 +33,12 @@
     </div>
 </nav>
 
-<!-- Modal de Cierre de Sesión -->
 <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="logoutModalLabel">¿Listo para salir?</h5>
+                <h5 class="modal-title" id="logoutModalLabel">¿Deseas cerrar sesión ?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-                Selecciona "Cerrar sesión" abajo si deseas finalizar tu sesión actual.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -48,3 +50,16 @@
         </div>
     </div>
 </div>
+
+<script>
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const panelTitle = document.getElementById('panelTitle');
+    
+    sidebarToggle.addEventListener('click', function () {
+        if (document.body.classList.contains('sidebar-open')) {
+            panelTitle.style.display = 'block';
+        } else {
+            panelTitle.style.display = 'none';
+        }
+    });
+</script>

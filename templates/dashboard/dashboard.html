@@ -4,11 +4,11 @@
 
 {% block content %}
 <div class="container-fluid">
-    <h1 class="h3 mb-4">Bienvenido, {{ user.first_name }} {{ user.last_name }}</h1>
     
     <div class="row">
+        
+        <!-- Panel del Aprendiz -->
         {% if user.user_type == 'apprentice' %}
-            <!-- Panel del Aprendiz -->
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card border-left-primary shadow h-100">
                     <div class="card-body">
@@ -68,13 +68,13 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <a href="{% url 'bitacoras:upload_bitacora' %}" class="btn btn-primary btn-block d-flex justify-content-between align-items-center">
+                                <a href="{% url 'bitacoras:upload_bitacora' %}" class="btn text-white btn-block d-flex justify-content-between align-items-center" style="background-color: #034231;">
                                     <span>Subir nueva bitácora</span>
                                     <i class="fas fa-upload"></i>
                                 </a>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <a href="{% url 'bitacoras:list_bitacoras' %}" class="btn btn-secondary btn-block d-flex justify-content-between align-items-center">
+                                <a href="{% url 'bitacoras:list_bitacoras' %}" class="btn btn-primary btn-block d-flex justify-content-between align-items-center">
                                     <span>Ver mis bitácoras</span>
                                     <i class="fas fa-list"></i>
                                 </a>
@@ -116,8 +116,8 @@
                 </div>
             {% endif %}
             
+        <!-- Panel del Instructor -->
         {% elif user.user_type == 'instructor' %}
-            <!-- Panel del Instructor -->
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card border-left-primary shadow h-100">
                     <div class="card-body">
@@ -143,13 +143,13 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <a href="{% url 'bitacoras:link_apprentice' %}" class="btn btn-primary btn-block d-flex justify-content-between align-items-center">
+                                <a href="{% url 'bitacoras:link_apprentice' %}" class="btn text-white btn-block d-flex justify-content-between align-items-center" style="background-color: #034231;">
                                     <span>Vincular nuevo aprendiz</span>
                                     <i class="fas fa-link"></i>
                                 </a>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <a href="{% url 'bitacoras:apprentice_list' %}" class="btn btn-secondary btn-block d-flex justify-content-between align-items-center">
+                                <a href="{% url 'bitacoras:apprentice_list' %}" class="btn btn-primary btn-block d-flex justify-content-between align-items-center">
                                     <span>Ver aprendices</span>
                                     <i class="fas fa-list"></i>
                                 </a>

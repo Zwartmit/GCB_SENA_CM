@@ -13,7 +13,7 @@
             <div class="card shadow-lg mt-5">
                 <div class="card-body p-5">
                     <div class="text-center mb-4">
-                        <img src="/static/img/LogoSENA_N.jpg" alt="Logo" height="90">
+                        <img src="/static/img/LogoSENA.png" alt="Logo" height="90">
                         <h2 class="mt-3">Gestión y control de bitácoras - GCB SENA CM</h2>
                     </div>
                     
@@ -41,19 +41,19 @@
                         </div>
                         
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Ingresar</button>
+                            <button type="submit" class="btn text-white" style="background-color: #034231">Ingresar</button>
                         </div>
                     </form>
                     
                     <div class="mt-3 text-center">
-                        <a href="{% url 'accounts:password_reset' %}" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+                        <a href="{% url 'accounts:password_reset' %}">¿Olvidaste tu contraseña?</a>
                     </div>
                     
                     <hr>
                     
                     <div class="text-center">
                         <p>¿No tienes una cuenta?</p>
-                        <a href="{% url 'accounts:register' %}" class="btn btn-outline-primary">Regístrate</a>
+                        <a href="{% url 'accounts:register' %}" class="btn" style="outline: 2px solid #034231;">Regístrate</a>
                     </div>
                 </div>
             </div>

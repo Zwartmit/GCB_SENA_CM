@@ -11,7 +11,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-key-for-development-only')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', '.replit.dev', '.repl.co', '*']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', '*']
 
 
 # Application definition
@@ -138,7 +138,12 @@ SESSION_COOKIE_AGE = 3600  # 1 hour in seconds
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # CSRF settings
-CSRF_TRUSTED_ORIGINS = ['https://*.replit.dev', 'https://*.repl.co']
+# CSRF_TRUSTED_ORIGINS = ['https://*.replit.dev', 'https://*.repl.co']
 
 # Email settings
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "kardex.sena.cm@gmail.com"
+EMAIL_HOST_PASSWORD = "qqwa tawv wvhd qyeg"

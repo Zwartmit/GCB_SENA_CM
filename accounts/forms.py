@@ -44,7 +44,7 @@ class BaseUserRegisterForm(UserCreationForm):
         validators=[
             RegexValidator(
                 regex=r'^\+?1?\d{9,15}$',
-                message="El número de teléfono debe ingresarse en el formato: '+999999999'. Se permiten hasta 15 dígitos."
+                message="El número de teléfono debe tener más de 9 dígitos."
             )
         ],
         widget=forms.TextInput(attrs={'class': 'form-control'})

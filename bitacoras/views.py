@@ -14,9 +14,8 @@ def user_is_instructor(user):
 
 @login_required
 def list_bitacoras(request):
-    """List bitacoras for the current apprentice"""
     if not user_is_apprentice(request.user):
-        messages.error(request, "Only apprentices can access this page.")
+        messages.error(request, "Solo los aprendices pueden acceder a esta página.")
         return redirect('dashboard:dashboard')
     
     bitacoras = Bitacora.objects.filter(apprentice=request.user)
@@ -24,9 +23,8 @@ def list_bitacoras(request):
 
 @login_required
 def upload_bitacora(request):
-    """Upload a new bitacora"""
     if not user_is_apprentice(request.user):
-        messages.error(request, "Only apprentices can upload bitácoras.")
+        messages.error(request, "Solo los aprendices pueden subir bitácoras.")
         return redirect('dashboard:dashboard')
     
     if request.method == 'POST':
@@ -36,7 +34,7 @@ def upload_bitacora(request):
             bitacora.apprentice = request.user
             bitacora.filename = request.FILES['file'].name
             bitacora.save()
-            messages.success(request, "Bitácora uploaded successfully!")
+            messages.success(request, "¡Bitácora subida exitosamente!")
             return redirect('bitacoras:list_bitacoras')
     else:
         form = BitacoraUploadForm()
@@ -45,25 +43,22 @@ def upload_bitacora(request):
 
 @login_required
 def delete_bitacora(request, pk):
-    """Delete a bitacora"""
     bitacora = get_object_or_404(Bitacora, pk=pk)
     
-    # Security check: only allow the owner to delete
     if bitacora.apprentice != request.user:
-        return HttpResponseForbidden("You don't have permission to delete this bitácora.")
+        return HttpResponseForbidden("No tienes permiso para eliminar esta bitácora.")
     
     if request.method == 'POST':
         bitacora.delete()
-        messages.success(request, "Bitácora deleted successfully!")
+        messages.success(request, "¡Bitácora eliminada exitosamente!")
         return redirect('bitacoras:list_bitacoras')
     
     return render(request, 'bitacoras/confirm_delete.html', {'bitacora': bitacora})
 
 @login_required
 def apprentice_list(request):
-    """List all apprentices linked to the current instructor"""
     if not user_is_instructor(request.user):
-        messages.error(request, "Only instructors can access this page.")
+        messages.error(request, "Solo los instructores pueden acceder a esta página.")
         return redirect('dashboard:dashboard')
     
     linked_apprentices = request.user.instructor_profile.linked_apprentices.all()
@@ -71,16 +66,14 @@ def apprentice_list(request):
 
 @login_required
 def apprentice_bitacoras(request, apprentice_id):
-    """View bitacoras for a specific apprentice"""
     if not user_is_instructor(request.user):
-        messages.error(request, "Only instructors can access this page.")
+        messages.error(request, "Solo los instructores pueden acceder a esta página.")
         return redirect('dashboard:dashboard')
     
     apprentice = get_object_or_404(User, pk=apprentice_id, user_type='apprentice')
     
-    # Security check: only allow instructors linked to this apprentice
     if apprentice not in request.user.instructor_profile.linked_apprentices.all():
-        return HttpResponseForbidden("You don't have permission to view this apprentice's bitácoras.")
+        return HttpResponseForbidden("No tienes permiso para ver las bitácoras de este aprendiz.")
     
     bitacoras = Bitacora.objects.filter(apprentice=apprentice)
     return render(request, 'bitacoras/apprentice_bitacoras.html', {
@@ -90,9 +83,8 @@ def apprentice_bitacoras(request, apprentice_id):
 
 @login_required
 def link_apprentice(request):
-    """Link an apprentice to the current instructor"""
     if not user_is_instructor(request.user):
-        messages.error(request, "Only instructors can link apprentices.")
+        messages.error(request, "Solo los instructores pueden vincular aprendices.")
         return redirect('dashboard:dashboard')
     
     if request.method == 'POST':
@@ -100,7 +92,7 @@ def link_apprentice(request):
         if form.is_valid():
             apprentice = form.cleaned_data['apprentice']
             request.user.instructor_profile.linked_apprentices.add(apprentice)
-            messages.success(request, f"Apprentice {apprentice.get_full_name()} linked successfully!")
+            messages.success(request, f"¡Aprendiz {apprentice.get_full_name()} vinculado exitosamente!")
             return redirect('bitacoras:apprentice_list')
     else:
         form = LinkApprenticeForm(instructor=request.user)
@@ -109,16 +101,15 @@ def link_apprentice(request):
 
 @login_required
 def unlink_apprentice(request, apprentice_id):
-    """Unlink an apprentice from the current instructor"""
     if not user_is_instructor(request.user):
-        messages.error(request, "Only instructors can unlink apprentices.")
+        messages.error(request, "Solo los instructores pueden desvincular aprendices.")
         return redirect('dashboard:dashboard')
     
     apprentice = get_object_or_404(User, pk=apprentice_id, user_type='apprentice')
     
     if request.method == 'POST':
         request.user.instructor_profile.linked_apprentices.remove(apprentice)
-        messages.success(request, f"Apprentice {apprentice.get_full_name()} unlinked successfully!")
+        messages.success(request, f"¡Aprendiz {apprentice.get_full_name()} desvinculado exitosamente!")
         return redirect('bitacoras:apprentice_list')
     
     return render(request, 'bitacoras/confirm_unlink.html', {'apprentice': apprentice})
