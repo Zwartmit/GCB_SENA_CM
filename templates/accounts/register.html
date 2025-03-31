@@ -15,7 +15,7 @@
                     </div>
                     
                     {% if user_type %}
-                        <!-- Tipo de usuario seleccionado, mostrar formulario de registro -->
+                    
                         <form method="post" action="{% if user_type == 'apprentice' %}{% url 'accounts:register_apprentice' %}{% else %}{% url 'accounts:register_instructor' %}{% endif %}">
                             {% csrf_token %}
                             
@@ -82,8 +82,8 @@
                                 </div>
                             </div>
 
+                    <!-- Campos específicos para aprendices -->
                     {% if user_type == 'apprentice' %}
-                        <!-- Campos específicos para aprendices -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="id_training_program" class="form-label">Programa de formación</label>
@@ -179,7 +179,6 @@
                     </form>
 
                     {% else %}
-                        <!-- No se ha seleccionado un tipo de usuario, mostrar selección -->
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <div class="card h-100">

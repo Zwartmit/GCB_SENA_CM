@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
-from .forms import CustomAuthenticationForm, CustomPasswordResetForm, CustomSetPasswordForm
+from .forms import CustomPasswordResetForm, CustomSetPasswordForm
 
 app_name = 'accounts'
 
@@ -13,7 +13,6 @@ urlpatterns = [
     path('register/apprentice/', views.register_apprentice, name='register_apprentice'),
     path('register/instructor/', views.register_instructor, name='register_instructor'),
     
-    # Password reset
     path('reset/done/', auth_views.PasswordResetView.as_view(
         template_name='accounts/password_reset.html',
         form_class=CustomPasswordResetForm,

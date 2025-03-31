@@ -23,13 +23,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     "django_browser_reload",
     
-    # Third-party apps
     'crispy_forms',
     'crispy_bootstrap5',
     
-    # Custom apps
     'accounts',
     'dashboard',
     'bitacoras',
@@ -71,12 +70,11 @@ WSGI_APPLICATION = 'education_system.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 import os
-import dj_database_url
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pseep',
+        'NAME': 'gcbitacoras',
         'USER': 'root',
         'PASSWORD': 'admin',
         'HOST': 'localhost',
@@ -97,9 +95,6 @@ AUTH_USER_MODEL = 'accounts.User'
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'es-ES'
-LANGUAGES = [    
-    ('es-ES', 'Spanish'),
-]
 
 TIME_ZONE = 'UTC'
 
@@ -136,9 +131,6 @@ LOGOUT_REDIRECT_URL = 'accounts:login'
 # Session settings (token expiration)
 SESSION_COOKIE_AGE = 3600  # 1 hour in seconds
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
-# CSRF settings
-# CSRF_TRUSTED_ORIGINS = ['https://*.replit.dev', 'https://*.repl.co']
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

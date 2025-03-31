@@ -4,7 +4,6 @@ import os
 import uuid
 
 def bitacora_file_path(instance, filename):
-    """Generate file path for new bitacora file"""
     ext = filename.split('.')[-1]
     filename = f"{uuid.uuid4()}.{ext}"
     return os.path.join('uploads/bitacoras/', filename)
@@ -35,7 +34,6 @@ class Bitacora(models.Model):
         super().save(*args, **kwargs)
     
     def delete(self, *args, **kwargs):
-        """Delete file from filesystem when deleting the model instance"""
         if self.file:
             if os.path.isfile(self.file.path):
                 os.remove(self.file.path)
